@@ -1,20 +1,5 @@
 /**
-** Generate random data from the practical time variations of usleep(3).
-**
-** Inspired by "timer entropy daemon"[1], whose output fails the randomness
-** test from rng-tools[2], which implements FIPS 140-2. This program uses a
-** different method to process the time variation, and it passes those tests.
-**
-** ENT[3] has more advanced tests; this program achieves good scores on all of
-** them. Most notably, it can consistently score inside the 25%-75% range on
-** the chi-square test.
-**
-** [1] http://www.vanheusden.com/te/
-** [2] http://packages.debian.org/sid/rng-tools
-** [3] http://www.fourmilab.ch/random/
-**
-*/
-/*
+** Generate random data from the practical variations of usleep(3).
 ** (C) 2010 Ximin Luo <infinity0@gmx.com>
 **
 ** This program is free software: you can redistribute it and/or modify
@@ -43,7 +28,9 @@
 
 /* Command line parsing */
 
-typedef struct options_s { char *args[1]; char *sleep_i; int verbose; } options;
+typedef struct options_s {
+	char *args[1]; char *sleep_i; int verbose;
+} options;
 
 const char *argp_program_version = "rng-usleep 0.2";
 const char *argp_program_bug_address = "<infinity0@gmx.com>";
@@ -153,7 +140,7 @@ int main(int argc, char *argv[]) {
 	pad_str = (length)? " ": "";
 
 	fprintf(stderr, "generating %s%srandom bytes @ %d+c us/bit\n",
-	  len_str, pad_str, sleep_i<<1, 125000/(double)(sleep_i<<1));
+	  len_str, pad_str, sleep_i);
 
 	/*struct timespec ts;
 	SUCCESS(clock_getres(CLOCK_REALTIME, &ts));

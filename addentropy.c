@@ -1,11 +1,5 @@
 /**
 ** Increase the kernel entropy pool size using data from stdin.
-**
-** This program assumes that the incoming data has maximum entropy, so don't
-** feed it biased or non-random data.
-**
-*/
-/*
 ** (C) 2010 Ximin Luo <infinity0@gmx.com>
 **
 ** This program is free software: you can redistribute it and/or modify
@@ -33,6 +27,8 @@
 static unsigned long written = 0;
 
 int main () {
+
+	fprintf(stderr, "addentropy: reading data from stdin. make sure it has 1 entropy bit per real bit!");
 
 	struct {
 		struct rand_pool_info info;
