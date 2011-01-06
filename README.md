@@ -23,7 +23,7 @@ Some suggested test suites:
 
 ###FIPS 140-2
 These tests are relatively simple and unsophisticated. If your data fails
-these, then it's most likely not random. `rng-tools`[^DRT] implements this
+these, then it's most likely not random. [`rng-tools`][^DRT] implements this
 as a standalone utility `rngtest`, which makes for convenient testing.
 
 ###[ENT][^ENT]
@@ -46,16 +46,16 @@ Currently, the package is structured into several programs. Each RNG is a
 separate program which generates data to stdout. To actually add this to the
 kernel entropy pool, use `addentropy`, eg:
 
- $ ./rng-usleep | sudo ./addentropy
- generating random bytes @ 40+c us/bit
+	$ ./rng-usleep | sudo ./addentropy
+	generating random bytes @ 40+c us/bit
 
 This is so the output of any particular RNG can be easily redirected into a
 file or piped to a testing program. If you want to see the data rate, install
 `pv` (Pipe Viewer) and place it in the middle of the pipe:
 
-  $ ./rng-usleep | pv | sudo ./addentropy
-  generating random bytes @ 40+c us/bit
-  13.2kB 0:00:15 [ 988B/s ] [      <=>                                          ]
+	$ ./rng-usleep | pv | sudo ./addentropy
+	generating random bytes @ 40+c us/bit
+	13.2kB 0:00:15 [ 988B/s ] [      <=>                                          ]
 
 Use `addentropy` with caution; it assumes that its incoming data has 1 bit of
 entropy per real bit. The TRNGs in this package will output such data, if their
