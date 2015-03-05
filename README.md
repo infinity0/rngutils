@@ -21,19 +21,19 @@ not hold on your particular setup, so **you must test the output yourself**.
 
 Some suggested test suites:
 
-FIPS 140-2
-:	These tests are relatively simple and unsophisticated. If your data fails
-	these, then it's most likely not random. `rng-tools`[^DRT] implements this
-	as a standalone utility `rngtest`, which makes for convenient testing.
+###FIPS 140-2
+These tests are relatively simple and unsophisticated. If your data fails
+these, then it's most likely not random. [`rng-tools`][^DRT] implements this
+as a standalone utility `rngtest`, which makes for convenient testing.
 
-ENT[^ENT]
-:	These tests are somewhat more complex. The test suite doesn't give any pass
-	or fail boundaries, but you can get an idea of its relative performance by
-	comparing the evaluation of your candidate data, to the evaluation of the
-	same amount of data read from `/dev/urandom`.
+###[ENT][^ENT]
+These tests are somewhat more complex. The test suite doesn't give any pass
+or fail boundaries, but you can get an idea of its relative performance by
+comparing the evaluation of your candidate data, to the evaluation of the
+same amount of data read from `/dev/urandom`.
 
-Diehard[^DHD]
-:	Haven't tried this out yet TODO.
+###[Diehard][^DHD]
+Haven't tried this out yet TODO.
 
 [^DRT]: http://packages.debian.org/sid/rng-tools
 [^ENT]: http://www.fourmilab.ch/random/
@@ -46,20 +46,16 @@ Currently, the package is structured into several programs. Each RNG is a
 separate program which generates data to stdout. To actually add this to the
 kernel entropy pool, use `addentropy`, eg:
 
-~~~~
-$ ./rng-usleep | sudo ./addentropy
-generating random bytes @ 40+c us/bit
-~~~~
+	$ ./rng-usleep | sudo ./addentropy
+	generating random bytes @ 40+c us/bit
 
 This is so the output of any particular RNG can be easily redirected into a
 file or piped to a testing program. If you want to see the data rate, install
 `pv` (Pipe Viewer) and place it in the middle of the pipe:
 
-~~~~
-$ ./rng-usleep | pv | sudo ./addentropy
-generating random bytes @ 40+c us/bit
-13.2kB 0:00:15 [ 988B/s ] [      <=>                                          ]
-~~~~
+	$ ./rng-usleep | pv | sudo ./addentropy
+	generating random bytes @ 40+c us/bit
+	13.2kB 0:00:15 [ 988B/s ] [      <=>                                          ]
 
 Use `addentropy` with caution; it assumes that its incoming data has 1 bit of
 entropy per real bit. The TRNGs in this package will output such data, if their
@@ -93,7 +89,7 @@ Given a high-entropy execution environment, the output should pass FIPS 140-2,
 and do well on all the ENT tests. On my machine (Debian Linux 2.6.32-5-amd64),
 it can consistently score inside the 25%-75% range on the chi-square test.
 
-(This was inspired by _timer entropy daemon_[^TED], which generates entropy in
+(This was inspired by [timer entropy daemon][^TED], which generates entropy in
 an inefficient way, and whose output fails FIPS 140-2.)
 
 [^TED]: http://www.vanheusden.com/te/
